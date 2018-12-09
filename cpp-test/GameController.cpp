@@ -138,6 +138,6 @@ void GameController::DoGame()
 		DoRules();
 		DoRender();
 
-		::Sleep(200);
+		::Sleep(100);
 	}
 }
