@@ -1,0 +1,46 @@
+#include "pch.h"
+#include "GameViewer.h"
+#include "GameController.h"
+#include <sstream>
+
+int GameViewer::ToRealXCoor(const int x) const
+{
+	return x + GameController::Instance().MAX_X_COOR / 2;
+}
+
+int GameViewer::ToRealYCoor(const int y) const
+{
+	return GameController::Instance().MAX_Y_COOR - (y + GameController::Instance().MAX_Y_COOR / 2);
+}
+
+GameViewer::GameViewer(const VisualObject &player1, const VisualObject &player2)
+	: _rendered("")
+{
+	VisualObject &refPlayer1 = const_cast<VisualObject &>(player1);
+	VisualObject &refPlayer2 = const_cast<VisualObject &>(player2);
+
+	ostringstream os;
+	os << "@ pos: (" << refPlayer1.X() << ", " << refPlayer1.Y() << ");\t";
+	os << "$ pos: (" << refPlayer2.X() << ", " << refPlayer2.Y() << ")\n";
+
+	int player1RealX = ToRealXCoor(refPlayer1.X());
+	int player1RealY = ToRealYCoor(refPlayer1.Y());
+	int player2RealX = ToRealXCoor(refPlayer2.X());
+	int player2RealY = ToRealYCoor(refPlayer2.Y());
+
+	_template.at(player1RealY).at(player1RealX) = refPlayer1.Symbol();
+	_template.at(player2RealY).at(player2RealX) = refPlayer2.Symbol();
+
+	for (const auto &line : _template)
+	{
+		os << line;
+	}
+
+	_rendered.append(os.str());
+}
+
+string &GameViewer::Render()
+{
+	return _rendered;
+}
+
