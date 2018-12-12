@@ -1,2 +1,2 @@
 # cpp-test
-Small project for C++ language showcasing
+Small project for C++ language showcasing.
