@@ -126,7 +126,20 @@ void GameController::DoRules()
 
 void GameController::DoRender()
 {
-	::system("cls");
+	//::system("cls");
+	HANDLE hConsole;
+	COORD coordScreen = { 0, 0 };
+	DWORD cCharsWritten;
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	DWORD dwConSize = 0;
+
+	hConsole = ::GetStdHandle(STD_OUTPUT_HANDLE);
+	::GetConsoleScreenBufferInfo(hConsole, &csbi);
+	::FillConsoleOutputCharacter(hConsole, static_cast<TCHAR>(' '), dwConSize, coordScreen, &cCharsWritten);
+	::GetConsoleScreenBufferInfo(hConsole, &csbi);
+	::FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten);
+	::SetConsoleCursorPosition(hConsole, coordScreen);
+
 	std::cout << GameViewer(*_player1, *_player2).Render();
 }
 
@@ -150,12 +163,22 @@ GameController::~GameController()
 
 void GameController::DoGame()
 {
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO     cursorInfo;
+
+	::GetConsoleCursorInfo(out, &cursorInfo);
+	cursorInfo.bVisible = false;
+	::SetConsoleCursorInfo(out, &cursorInfo);
+
 	while (_doGame)
 	{
 		DoInput();
 		DoRules();
 		DoRender();
 
-		::Sleep(100);
+		::Sleep(33);
 	}
+
+	cursorInfo.bVisible = true;
+	::SetConsoleCursorInfo(out, &cursorInfo);
 }
