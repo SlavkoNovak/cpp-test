@@ -2,6 +2,7 @@
 #include "GameViewer.h"
 #include "GameController.h"
 #include <sstream>
+#include <iomanip>
 
 int GameViewer::ToRealXCoor(const int x) const
 {
@@ -20,8 +21,8 @@ GameViewer::GameViewer(const VisualObject &player1, const VisualObject &player2)
 	VisualObject &refPlayer2 = const_cast<VisualObject &>(player2);
 
 	ostringstream os;
-	os << "@ pos: (" << refPlayer1.X() << ", " << refPlayer1.Y() << ");\t";
-	os << "$ pos: (" << refPlayer2.X() << ", " << refPlayer2.Y() << ")\n";
+	os << "@ pos: (" << setw(3) << refPlayer1.X() << ", " << setw(3) << refPlayer1.Y() << ");\t";
+	os << "$ pos: (" << setw(3) << refPlayer2.X() << ", " << setw(3) << refPlayer2.Y() << ")\n";
 
 	int player1RealX = ToRealXCoor(refPlayer1.X());
 	int player1RealY = ToRealYCoor(refPlayer1.Y());

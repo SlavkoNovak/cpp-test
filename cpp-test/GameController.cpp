@@ -134,10 +134,6 @@ void GameController::DoRender()
 	DWORD dwConSize = 0;
 
 	hConsole = ::GetStdHandle(STD_OUTPUT_HANDLE);
-	::GetConsoleScreenBufferInfo(hConsole, &csbi);
-	::FillConsoleOutputCharacter(hConsole, static_cast<TCHAR>(' '), dwConSize, coordScreen, &cCharsWritten);
-	::GetConsoleScreenBufferInfo(hConsole, &csbi);
-	::FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten);
 	::SetConsoleCursorPosition(hConsole, coordScreen);
 
 	std::cout << GameViewer(*_player1, *_player2).Render();
