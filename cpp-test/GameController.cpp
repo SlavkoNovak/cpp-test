@@ -92,18 +92,36 @@ void GameController::DoRules()
 	VisualObject &refPlayer1 = *_player1;
 	VisualObject &refPlayer2 = *_player2;
 
-	if (refPlayer1 == static_cast<Point>(refPlayer2)
-		|| refPlayer1.X() <= _topLeftPoint.X()
-		|| refPlayer1.X() >= _bottomRightPoint.X()
-		|| refPlayer1.Y() >= _topLeftPoint.Y()
-		|| refPlayer1.Y() <= _bottomRightPoint.Y()
-		|| refPlayer2.X() <= _topLeftPoint.X()
-		|| refPlayer2.X() >= _bottomRightPoint.X()
-		|| refPlayer2.Y() >= _topLeftPoint.Y()
-		|| refPlayer2.Y() <= _bottomRightPoint.Y())
-	{
-		_doGame = false;
-	}
+	//Check overlap
+	if (refPlayer1 == static_cast<Point>(refPlayer2)) _doGame = false;
+
+	//Do player1 -->
+	if(refPlayer1.X() <= _topLeftPoint.X()) refPlayer1.SetX(_topLeftPoint.X() + 1);
+	if(refPlayer1.X() >= _bottomRightPoint.X()) refPlayer1.SetX(_bottomRightPoint.X() - 1);
+
+	if (refPlayer1.X() <= _topLeftPoint.X()) refPlayer1.SetX(_topLeftPoint.X() + 1);
+	if (refPlayer1.X() >= _bottomRightPoint.X()) refPlayer1.SetX(_bottomRightPoint.X() - 1);
+
+	if (refPlayer1.Y() >= _topLeftPoint.Y()) refPlayer1.SetY(_topLeftPoint.Y() - 1);
+	if (refPlayer1.Y() <= _bottomRightPoint.Y()) refPlayer1.SetY(_bottomRightPoint.Y() + 1);
+
+	if (refPlayer1.Y() >= _topLeftPoint.Y()) refPlayer1.SetY(_topLeftPoint.Y() - 1);
+	if (refPlayer1.Y() <= _bottomRightPoint.Y()) refPlayer1.SetY(_bottomRightPoint.Y() + 1);
+	//<-- Do player1
+
+	//Do player2 -->
+	if (refPlayer2.X() <= _topLeftPoint.X()) refPlayer2.SetX(_topLeftPoint.X() + 1);
+	if (refPlayer2.X() >= _bottomRightPoint.X()) refPlayer2.SetX(_bottomRightPoint.X() - 1);
+
+	if (refPlayer2.X() <= _topLeftPoint.X()) refPlayer2.SetX(_topLeftPoint.X() + 1);
+	if (refPlayer2.X() >= _bottomRightPoint.X()) refPlayer1.SetX(_bottomRightPoint.X() - 1);
+
+	if (refPlayer2.Y() >= _topLeftPoint.Y()) refPlayer2.SetY(_topLeftPoint.Y() - 1);
+	if (refPlayer2.Y() <= _bottomRightPoint.Y()) refPlayer2.SetY(_bottomRightPoint.Y() + 1);
+
+	if (refPlayer2.Y() >= _topLeftPoint.Y()) refPlayer2.SetY(_topLeftPoint.Y() - 1);
+	if (refPlayer2.Y() <= _bottomRightPoint.Y()) refPlayer2.SetY(_bottomRightPoint.Y() + 1);
+	//<-- Do player2
 }
 
 void GameController::DoRender()
