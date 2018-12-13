@@ -12,7 +12,7 @@ private:
 public:
 	VisualObject();
 	VisualObject(const Point &point, const char symbol);
-	VisualObject(const int x, const int y, const char symbol);
+	VisualObject(const int x, const int y, const char symbol = ' ');
 	VisualObject(const VisualObject &) = delete;
 	virtual ~VisualObject();
 

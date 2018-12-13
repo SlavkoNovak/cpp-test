@@ -2,6 +2,7 @@
 #define _GAME_CONTROLLER_H
 
 #include <map>
+#include <array>
 #include "VisualObject.h"
 
 class GameController
@@ -16,6 +17,7 @@ class GameController
 	const int CHAR_W = 'W';
 	const int CHAR_S = 'S';
 
+	int _consoleOutHandler;
 	int _key;
 	int _ch;
 	bool _doGame;
@@ -33,6 +35,7 @@ class GameController
 
 	std::map<int, void (GameController::*)()> _keyEventHandlerMap;
 
+	std::array<VisualObject *, 10> _gremlins;
 	VisualObject *_player1;
 	VisualObject *_player2;
 	Point _topLeftPoint;

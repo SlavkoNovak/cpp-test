@@ -7,6 +7,8 @@
 
 GameController::GameController(): _ch(0), _key(0), _doGame(true)
 {
+	_consoleOutHandler = (int)GetStdHandle(STD_OUTPUT_HANDLE);
+
 	_topLeftPoint = Point(-(MAX_X_COOR / 2), MAX_Y_COOR / 2);
 	_bottomRightPoint = Point(MAX_X_COOR / 2, -(MAX_Y_COOR / 2));
 
@@ -23,6 +25,16 @@ GameController::GameController(): _ch(0), _key(0), _doGame(true)
 
 	_player1 = new VisualObject(-12, 0, '@');
 	_player2 = new VisualObject(12, 0, '$');
+
+	for (std::size_t i = 0; i < _gremlins.size(); i++)
+	{
+		//_gremlins[i] = new VisualObject(0, 0, '*');
+	}
+
+	for (auto &gremlin : _gremlins)
+	{
+		gremlin = new VisualObject(0, 0, '*');
+	}
 }
 
 void GameController::KeyLeft()
@@ -122,21 +134,23 @@ void GameController::DoRules()
 	if (refPlayer2.Y() >= _topLeftPoint.Y()) refPlayer2.SetY(_topLeftPoint.Y() - 1);
 	if (refPlayer2.Y() <= _bottomRightPoint.Y()) refPlayer2.SetY(_bottomRightPoint.Y() + 1);
 	//<-- Do player2
+
+	for (auto &gremlins : _gremlins)
+	{
+		int randomX = (rand() % (MAX_X_COOR - 1) + _topLeftPoint.X() + 1);
+		int randomY = (rand() % (MAX_Y_COOR - 1) - _topLeftPoint.Y() + 1);
+		gremlins->SetX(randomX).SetY(randomY);
+	}
 }
 
 void GameController::DoRender()
 {
 	//::system("cls");
-	HANDLE hConsole;
 	COORD coordScreen = { 0, 0 };
-	DWORD cCharsWritten;
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	DWORD dwConSize = 0;
 
-	hConsole = ::GetStdHandle(STD_OUTPUT_HANDLE);
-	::SetConsoleCursorPosition(hConsole, coordScreen);
-
-	std::cout << GameViewer(*_player1, *_player2).Render();
+	::SetConsoleCursorPosition((HANDLE)_consoleOutHandler, coordScreen);
+	std::cout << GameViewer(*_player1, *_player2, _gremlins).Render();
 }
 
 GameController &GameController::Instance()
@@ -155,16 +169,16 @@ GameController::~GameController()
 {
 	delete _player1;
 	delete _player2;
+	delete[] _gremlins.data();
 }
 
 void GameController::DoGame()
 {
-	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO     cursorInfo;
 
-	::GetConsoleCursorInfo(out, &cursorInfo);
+	::GetConsoleCursorInfo((HANDLE)_consoleOutHandler, &cursorInfo);
 	cursorInfo.bVisible = false;
-	::SetConsoleCursorInfo(out, &cursorInfo);
+	::SetConsoleCursorInfo((HANDLE)_consoleOutHandler, &cursorInfo);
 
 	while (_doGame)
 	{
@@ -176,5 +190,5 @@ void GameController::DoGame()
 	}
 
 	cursorInfo.bVisible = true;
-	::SetConsoleCursorInfo(out, &cursorInfo);
+	::SetConsoleCursorInfo((HANDLE)_consoleOutHandler, &cursorInfo);
 }
