@@ -7,7 +7,7 @@
 
 GameController::GameController(): _ch(0), _key(0), _doGame(true)
 {
-	_consoleOutHandler = (int)GetStdHandle(STD_OUTPUT_HANDLE);
+	_consoleOutHandler = (int)::GetStdHandle(STD_OUTPUT_HANDLE);
 
 	_topLeftPoint = Point(-(MAX_X_COOR / 2), MAX_Y_COOR / 2);
 	_bottomRightPoint = Point(MAX_X_COOR / 2, -(MAX_Y_COOR / 2));
