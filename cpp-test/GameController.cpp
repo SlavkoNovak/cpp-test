@@ -135,11 +135,11 @@ void GameController::DoRules()
 	if (refPlayer2.Y() <= _bottomRightPoint.Y()) refPlayer2.SetY(_bottomRightPoint.Y() + 1);
 	//<-- Do player2
 
-	for (auto &gremlins : _gremlins)
+	for (auto &gremlin : _gremlins)
 	{
 		int randomX = (rand() % (MAX_X_COOR - 1) + _topLeftPoint.X() + 1);
 		int randomY = (rand() % (MAX_Y_COOR - 1) - _topLeftPoint.Y() + 1);
-		gremlins->SetX(randomX).SetY(randomY);
+		gremlin->SetX(randomX).SetY(randomY);
 	}
 }
 
