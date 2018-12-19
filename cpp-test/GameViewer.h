@@ -46,7 +46,7 @@ public:
 	GameViewer() = delete;
 	explicit GameViewer(const VisualObject & player1, const VisualObject & player2, const std::array<VisualObject*, 10> &_gremlins);
 	//	explicit GameViewer(const VisualObject &player1, const VisualObject &player2);
-	string &Render();
+	const string &Render() const;
 };
 
 #endif

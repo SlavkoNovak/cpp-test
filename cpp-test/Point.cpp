@@ -18,7 +18,7 @@ Point::~Point()
 {
 }
 
-int Point::X()
+int Point::X() const
 {
 	return _x;
 }
@@ -29,7 +29,7 @@ Point & Point::SetX(const int x)
 	return *this;
 }
 
-int Point::Y()
+int Point::Y() const
 {
 	return _y;
 }

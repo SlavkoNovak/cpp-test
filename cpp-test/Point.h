@@ -13,10 +13,10 @@ public:
 	Point(const Point &src);
 	virtual ~Point();
 
-	int X();
+	int X() const;
 	Point &SetX(const int x);
 
-	int Y();
+	int Y() const;
 	Point &SetY(const int y);
 
 	Point operator+=(const Point &other);

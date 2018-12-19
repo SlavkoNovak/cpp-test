@@ -47,7 +47,7 @@ GameViewer::GameViewer(const VisualObject &player1, const VisualObject &player2,
 	_rendered.append(os.str());
 }
 
-string &GameViewer::Render()
+const string &GameViewer::Render() const
 {
 	return _rendered;
 }
