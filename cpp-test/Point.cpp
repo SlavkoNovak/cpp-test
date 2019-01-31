@@ -34,7 +34,7 @@ int Point::Y() const
 	return _y;
 }
 
-Point & Point::SetY(const int y)
+Point &Point::SetY(const int y)
 {
 	_y = y;
 	return *this;
@@ -48,7 +48,7 @@ Point Point::operator+=(const Point &other)
 	return *this;
 }
 
-Point Point::operator+(const Point & other)
+Point Point::operator+(const Point &other)
 {
 	Point retVal = *this;
 
